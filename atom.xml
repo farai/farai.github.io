@@ -4,7 +4,7 @@
   <title><![CDATA[A Developer's Blog]]></title>
   <link href="http://farai.github.io/atom.xml" rel="self"/>
   <link href="http://farai.github.io/"/>
-  <updated>2014-05-11T14:50:51+01:00</updated>
+  <updated>2014-05-11T14:53:42+01:00</updated>
   <id>http://farai.github.io/</id>
   <author>
     <name><![CDATA[Farai]]></name>
@@ -133,7 +133,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>And thats all that was to setting my new Octopress blog.</p>
+<p>And thats all that was to setting up my new Octopress blog.</p>
 ]]></content>
   </entry>
   
