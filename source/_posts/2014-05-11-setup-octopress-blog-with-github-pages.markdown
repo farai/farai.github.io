@@ -103,4 +103,4 @@ Creating my first post was as easy as running:
 rake "new_post[Setup Octopress blog with Github Pages]"
 
 ```
-And thats all that was to setting my new Octopress blog.
+And thats all that was to setting up my new Octopress blog.
