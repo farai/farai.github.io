@@ -3,9 +3,9 @@
 # ----------------------- #
 
 url: http://farai.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+title: A Developer's Blog
+subtitle: Various notes on Web development and tech.
+author: Farai
 simple_search: https://www.google.com/search
 description:
 
@@ -20,6 +20,17 @@ subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
 email:
+
+# ----------------------- #
+#      Navigation         #
+# ----------------------- #
+navigation:
+- text: Blog
+  url: /index.html
+- text: Archives
+  url: /archives.html
+- text: About
+  url: /about.html
 
 # ----------------------- #
 #    Jekyll & Plugins     #
