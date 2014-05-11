@@ -5,8 +5,8 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>A Developer's Blog</title>
+  <meta name="author" content="Farai">
 
    
   <meta name="description" content="">
@@ -24,7 +24,7 @@
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="A Developer's Blog" type="application/atom+xml">
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap-collapse.js"></script>
   <script src="/js/modernizr-2.0.js"></script>
@@ -47,6 +47,12 @@
         </a>
   	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
   	      <ul class="nav">
+    
+        <li class="active"><a href="/index.html">Blog</a></li>
+    
+        <li ><a href="/archives.html">Archives</a></li>
+    
+        <li ><a href="/about.html">About</a></li>
     
 </ul>
 
@@ -72,11 +78,11 @@
           <div class="jumbotron">
   <div class="container">
     
-      My Octopress Blog
+      A Developer&#8217;s Blog
     
     <h3 class="tagline">
       
-        A blogging framework for hackers.
+        Various notes on Web development and tech.
       
     </h3>
   </div>
@@ -85,6 +91,163 @@
 
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-05-11T10:48:30+01:00" pubdate data-updated="true">May 11<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/05/11/setup-octopress-blog-with-github-pages/">Setup Octopress blog with Github Pages</a></h1>
+      <p>Having decided to start blogging again after a minor hiatus I&rsquo;ve decided to start a new blog using <a href="http://octopress.org/">Octopress</a> as the framework of choice. It uses Jekyll, the blog aware static site generator that powers  Github Pages.</p>
+
+<p>This write up details the process of getting setup and any gotchas I encountered for my own future reference and for anyone that might find this useful.</p>
+
+<p>The setup detailed in this writeup was carried out on my Mac Book Pro, running OS X Mavericks and a zsh terminal.</p>
+
+<h2>Prerequisite:</h2>
+
+<ol>
+<li>Ensure you have <a href="http://git-scm.com/">git</a> installed. If you have <a href="https://developer.apple.com/xcode/downloads/">Xcode tools</a> then you should already have git available on your machine.</li>
+<li>Install <a href="https://github.com/wayneeseguin/rvm">rvm</a> or <a href="https://github.com/sstephenson/rbenv">rbenv</a> with ruby version 1.9.3. Despite Octopress docs suggesting ruby versions greater than 1.9.3 would suffice, I had issues trying to use v2.0 as some of the Octopress dependencies didnt seem to support it.</li>
+<li>Install <a href="http://bundler.io/">Bundler</a>,  the Ruby dependency manager.</li>
+</ol>
+
+
+<h2>Setup:</h2>
+
+<p>Obtain Octopress by cloning it onto your local machine and navigate into the cloned folder.</p>
+
+<p>In my instance I cloned it into a directory called &ldquo;blog&rdquo; as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone git://github.com/imathis/octopress.git blog
+</span><span class='line'>cd blog
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install all the required dependencies:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install the default Octopress theme:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Deployment</h1>
+
+<p>For easy publishing and to get free hosting for my blog I decided to use <a href="https://pages.github.com/">Github pages</a> which also provides me with the domain <code>http://farai.github.io</code>.</p>
+
+<p>To get the hosting setup, log into your <a href="https://github.com/">Github</a> account and <a href="https://github.com/repositories/new">create a github repository</a> with a name in the format of <code>username.github.io</code> where username is your Github user name. Ensure the name of your repository is in the correct format so that Github pages will be able to locate and serve your site as it will serve everything from the master branch of this repo like the web root directory on a server.</p>
+
+<p>As the generated content will be served from the master branch of your repo you will want to work off a separate branch when making changes to your repo. Octopress provides a rake task that helps you setup a good work flow so you can easily manage and deploy:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake setup_github_pages
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will notice after running the <code>setup_github_pages</code> task a new branch will have been created for you called &ldquo;source&rdquo; and a folder named &ldquo;<em>deploy&rdquo;. When making changes to your blog you will now be working off the source branch and every time you perform a deployment, the changes you&rsquo;ve made will be copied into the </em>deploy folder then pushed upto into the master branch by another set of deployment tasks.</p>
+
+<p>To perform a deployment run the tasks:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>$ rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this stage your site should now be deployed. The pending task would be to ensure you save site changes under source control by committing your changes on the &ldquo;source&rdquo; branch as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m 'your desired commit message'
+</span><span class='line'>$ git push origin source
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Remember to always commit changes made on your source branch.</p>
+
+<p>If you now go ahead and visit <code>http://yourgithubusername.github.io</code> you should now be able to see your live site.</p>
+
+<h1>Custom Theme</h1>
+
+<p>Upon completion of the setup, I didn&rsquo;t quite like the default Octopress theme and if you share the same feeling, the following process details how I added a custom theme.</p>
+
+<p>I settled on the <a href="http://github.com/alexgaribay/octoflat">Octoflat</a> theme by Alex Garibay and you can choose from a variety of other nice <a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes">3rd party Octopress themes</a>.</p>
+
+<p>To install the custom theme I ran the following commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd blog
+</span><span class='line'>$ git clone https://github.com/alexgaribay/octoflat .themes/octoflat
+</span><span class='line'>$ rake "install[octoflat]"
+</span><span class='line'>$ rake generate
+</span><span class='line'>$ rake deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that I quoted the arguments to rake on the install command as opposed to running <code>rake install['octoflat']</code> as most instructions suggest. This was intentional and due to the fact that instructions found in the docs are Bash oriented and I&rsquo;m using a Zsh terminal which had me getting the error <code>zsh: no matches found: install[octoflat]</code>.</p>
+
+<h1>Creating my first post</h1>
+
+<p>Octopress also provides a task to help you create your posts preloaded with metadata and according to Jekyll&rsquo;s naming conventions.</p>
+
+<p>Creating my first post was as easy as running:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake "new_post[Setup Octopress blog with Github Pages]"
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And thats all that was to setting my new Octopress blog.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
   
   <div class="pagination">
     
@@ -99,7 +262,7 @@
       <div class="row-fluid">
         <footer class="footer-page" role="contentinfo">
           <p>
-  Copyright &copy; 2014 - Your Name -
+  Copyright &copy; 2014 - Farai -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
 </p>
 
