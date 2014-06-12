@@ -5,6 +5,12 @@
         <lastmod>2014-05-11T14:52:55+01:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://farai.github.io/blog/2014/06/12/client-side-dependency-management-with-bower/
+        </loc>
+        <lastmod>2014-06-12T20:50:38+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://farai.github.io/about.html</loc>
         <lastmod>2014-05-11T10:36:42+01:00</lastmod>
     </url>
@@ -14,11 +20,11 @@
     </url>
     <url>
         <loc>http://farai.github.io/blog/archives/</loc>
-        <lastmod>2014-05-11T14:52:55+01:00</lastmod>
+        <lastmod>2014-06-12T20:50:38+01:00</lastmod>
     </url>
     <url>
         <loc>http://farai.github.io/</loc>
-        <lastmod>2014-05-11T14:52:55+01:00</lastmod>
+        <lastmod>2014-06-12T20:50:38+01:00</lastmod>
     </url>
     <url>
         <loc>http://farai.github.io/robots.txt</loc>
