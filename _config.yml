@@ -28,7 +28,7 @@ navigation:
 - text: Blog
   url: /index.html
 - text: Archives
-  url: /archives.html
+  url: /archives.htmlGIt
 - text: About
   url: /about.html
 
