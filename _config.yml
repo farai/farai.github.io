@@ -6,7 +6,7 @@ url: http://farai.github.io
 title: A Developer's Blog
 subtitle: Various notes on Web development and tech.
 author: Farai
-simple_search: https://www.google.com/search
+simple_search: 
 description: Various notes on Web development and tech
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
