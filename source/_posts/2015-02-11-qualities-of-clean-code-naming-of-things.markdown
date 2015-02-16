@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Qualities of clean code - Naming of things"
+title: "Qualities of clean code: Part1 - Naming of things"
 date: 2015-02-11 16:44:23 +0000
 comments: true
 categories: 
