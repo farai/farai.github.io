@@ -10,7 +10,7 @@
 
   <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
   
-  <meta name="description" content="Qualities of Clean Code - Naming of Things Over the course of the months to come, Im going to be focusing on the topic of clean code and noting all &hellip;">
+  <meta name="description" content="Javascript NaN for New Date Object in IE &amp; Safari Recently I came across an issue during some cross browser testing of a change I had made which &hellip;">
   -->
   
 
@@ -94,7 +94,79 @@
       
   <header>
     
-      <h1 class="entry-title" style="font-family: "><a href="/blog/2015/02/11/qualities-of-clean-code-naming-of-things/">Qualities of Clean Code - Naming of Things</a></h1>
+      <h1 class="entry-title" style="font-family: "><a href="/blog/2015/02/16/javascript-nan-for-new-date-object-in-ie-and-safari/">Javascript NaN for New Date Object in IE &amp; Safari</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content" style="font-family: ; font-size: "><p>Recently I came across an issue during some cross browser testing of a change I had made which highlighted an interesting issue. It appeared Internet Explorer and Safari seem to handle date strings differently when instantiating new date objects using javascript&rsquo;s <code>new Date()</code>.</p>
+
+<p>The date string I was trying to use to instantiate a new date object looked like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'2015-02-16T12:44:42+0000' 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above format is the basic ISO 8601 notation which includes the timezone offset via the value shown after &ldquo;+&rdquo;.</p>
+
+<p>To the best of my knowledge this format is the most widely used across the web but when trying trying to instaniate a new date object like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dateTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;2015-02-16T12:44:42+0000&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This resulted in the NaN message being rendered everywhere I was trying to show a date in IE and Safari but other browsers seemed to handle the string accordingly without any issue.</p>
+
+<p>Following closer inspection of my input datetime string and a few minutes of playing around with my trusty browser console and javascript&rsquo;s <code>Date()</code>, it turns out the IE and Safari will only accept the the extended date time notation which looks like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;2015-02-16T12:44:42+00:00&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The difference between the extended notation and the basic notation I had been trying to use was just the inclusion of the colon in the timezone offset value. This left me intrigued as to whether the other browsers which had been working fine with the basic notation would be able to handle the creation of date objects with input strings in extended notation and turns out they could.</p>
+
+<p>Having found out that using the extended notation is always going to be the safer option for cross browser compatibility, I found the solution below to do the trick:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dateTimeString</span> <span class="o">=</span> <span class="s1">&#39;2015-02-16T12:44:42+0000&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//add colon to timezone offet</span>
+</span><span class='line'><span class="nx">dateTime</span> <span class="o">=</span> <span class="nx">dateTimeString</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([+\-]\d\d)(\d\d)$/</span><span class="p">,</span> <span class="s2">&quot;$1:$2&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Should you come across the same issue, hopefully you find this useful.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" style="font-family: "><a href="/blog/2015/02/11/qualities-of-clean-code-naming-of-things/">Qualities of Clean Code: Part1 - Naming of Things</a></h1>
     
     
       <p class="meta">

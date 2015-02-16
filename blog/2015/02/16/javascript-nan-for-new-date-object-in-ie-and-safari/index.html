@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Javascript NaN for New Date Object in IE &amp; Safari - A Developer's Blog</title>
+  <meta name="author" content="Farai">
+
+  <!-- Causes trouble with per-article font implementations under /source/_includes/article.html
+  
+  <meta name="description" content="Javascript NaN for New Date Object in IE &amp; Safari Recently I came across an issue during some cross browser testing of a change I had made which &hellip;">
+  -->
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://farai.github.io/blog/2015/02/16/javascript-nan-for-new-date-object-in-ie-and-safari">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="A Developer's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Poller+One" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Germania+One" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Fontdiner+Swanky" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Lato&subset=latin-ext" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Cardo&subset=latin-ext" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Sorts+Mill+Goudy" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Della+Respira" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=UnifrakturMaguntia&subset=all" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Arimo|EB+Garamond|PT+Sans+Caption&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<logo>
+
+<img src="/logo.png" alt="Website Logo. Upload to /source/logo.png ; disable in /source/_includes/logo.html" height="32px" width="32px">
+</logo>
+
+
+
+<body >
+  <header role="banner"><hgroup>
+  <h1><a href="/">A Developer's Blog</a></h1>
+  
+    <h2>Various notes on Web development and tech.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+<br>
+
+      
+        <form action="https://www.google.com/search" method="get">
+          <fieldset role="search">
+            <input type="hidden" name="q" value="site:farai.github.io" />
+      
+      
+            <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+          </fieldset>
+        </form>
+  
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title" style="font-family: ">Javascript NaN for New Date Object in IE &amp; Safari</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content" style="font-family: ; font-size: "><p>Recently I came across an issue during some cross browser testing of a change I had made which highlighted an interesting issue. It appeared Internet Explorer and Safari seem to handle date strings differently when instantiating new date objects using javascript&rsquo;s <code>new Date()</code>.</p>
+
+<p>The date string I was trying to use to instantiate a new date object looked like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'2015-02-16T12:44:42+0000' 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above format is the basic ISO 8601 notation which includes the timezone offset via the value shown after &ldquo;+&rdquo;.</p>
+
+<p>To the best of my knowledge this format is the most widely used across the web but when trying trying to instaniate a new date object like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dateTime</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="s1">&#39;2015-02-16T12:44:42+0000&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This resulted in the NaN message being rendered everywhere I was trying to show a date in IE and Safari but other browsers seemed to handle the string accordingly without any issue.</p>
+
+<p>Following closer inspection of my input datetime string and a few minutes of playing around with my trusty browser console and javascript&rsquo;s <code>Date()</code>, it turns out the IE and Safari will only accept the the extended date time notation which looks like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;2015-02-16T12:44:42+00:00&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The difference between the extended notation and the basic notation I had been trying to use was just the inclusion of the colon in the timezone offset value. This left me intrigued as to whether the other browsers which had been working fine with the basic notation would be able to handle the creation of date objects with input strings in extended notation and turns out they could.</p>
+
+<p>Having found out that using the extended notation is always going to be the safer option for cross browser compatibility, I found the solution below to do the trick:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">dateTimeString</span> <span class="o">=</span> <span class="s1">&#39;2015-02-16T12:44:42+0000&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//add colon to timezone offet</span>
+</span><span class='line'><span class="nx">dateTime</span> <span class="o">=</span> <span class="nx">dateTimeString</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([+\-]\d\d)(\d\d)$/</span><span class="p">,</span> <span class="s2">&quot;$1:$2&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Should you come across the same issue, hopefully you find this useful.</p>
+</div>
+
+
+  <footer class="page-footer">
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Text authored by <span class="fn">Farai</span></span>
+
+
+      
+
+
+
+
+
+      
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://farai.github.io/blog/2015/02/16/javascript-nan-for-new-date-object-in-ie-and-safari/" data-via="" data-counturl="http://farai.github.io/blog/2015/02/16/javascript-nan-for-new-date-object-in-ie-and-safari/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/02/11/qualities-of-clean-code-naming-of-things/" title="Previous Post: Qualities of clean code: Part1 - Naming of things">&laquo; Qualities of clean code: Part1 - Naming of things</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+
+</div>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Website copyright &copy; 2015 - Farai |
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/TheChymera/Koenigspress">Königspress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
